@@ -1,0 +1,1 @@
+this is the version of the event page that will support showing syncronized static images
