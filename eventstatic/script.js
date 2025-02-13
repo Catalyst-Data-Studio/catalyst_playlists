@@ -20,7 +20,7 @@ if (params.get("synced") == undefined) {
   // set a timeout to happen in next 10 seconds
   let mods = s % 10
   setTimeout(() => {
-    window.location.assign(`https://catalystdlxeventstatic.baylyd.repl.co/?group=${group}&synced=1`)
+    window.location.assign(`https://devinbayly.github.io/catalyst_playlists/eventstatic/index.html/?group=${group}&synced=1`)
   }, (10 - mods) * 1000)
 } else {
   let p_update_interval
