@@ -1,0 +1,21 @@
+body{
+  /* display: flex; */
+  justify-content: center;
+  background:black;
+  /* height:100%; */
+}
+html{
+  /* height:100%; */
+  
+}
+#outer {
+  width:75%;
+  /* height:100%; */
+  overflow: scroll;
+  display:flex;
+  margin:auto;
+}
+
+img {
+  width:100%;
+}
