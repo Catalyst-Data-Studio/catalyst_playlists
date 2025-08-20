@@ -1,7 +1,16 @@
 # Purpose
-This repo is a collection of pages that were created to run content on the data studio monitors
+This repo is a collection of content created for the data studio monitors
 
-## Pages
+## Google Slide Shows
+In general you can follow this size template to create slides that can be stretched across the two displays of the vis PC.
+*  [3 column per screen Template](https://docs.google.com/presentation/d/1NHlzmIyBmmLJK9dn-9Y4OIvbymMPe-C6dZo4himj18o/edit?usp=sharing)
+
+**Examples**
+* [ABOR visit 2025](https://docs.google.com/presentation/d/12AG1TLL0Q-2X_POTQM4h9SAoyjCi43y09m4Q8hjqxxw/present) 
+
+*Special note*, the firefox browser on the vis PC has been configured with a custom addon that will automatically make any embedded videos auto loop, so please make use of this browser instead of chrome for these kinds of presentations
+
+## Web Pages
 * [DLX static projector page](dlx_static_projector/index.html)
 * [DLX static tableau presentation page](eventstatic/index.html)
 * [DLX NSF vizzies videos](CATalystDLXeventvideo/index.html)
