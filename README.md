@@ -15,6 +15,7 @@ In general you can follow this size template to create slides that can be stretc
 * [DLX static tableau presentation page](eventstatic/index.html)
 * [DLX NSF vizzies videos](CATalystDLXeventvideo/index.html)
 * [Creative Coding Playlist](CATalystPlaylistdev/index.html)
+* [Creative Coding workshops](creative_coding/index.html)
 
 ## Customizations
 Several of these pages depend on google spreadsheets that hold the links they iterate over. This means that further modification can be performed without changing the application code by adding more content to these google sheets according to the existing patterns in place
