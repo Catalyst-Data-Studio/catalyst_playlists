@@ -22,7 +22,7 @@ async function grabSketches() {
 }).then(res=> res.json());
     console.log(result)
     let container = document.querySelector("#container")
-    for (let sketch of result.slice(0, 3)) {
+    for (let sketch of result) {
       // check that the sketch is recent enough
       let now = new Date()
       let sketchTime = new Date(sketch.updatedAt)
