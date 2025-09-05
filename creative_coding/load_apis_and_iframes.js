@@ -3,30 +3,42 @@
 let iwidth = 500
 let iheight = 500
 async function grabSketches() {
+  let users = `
+  poojakumar2899
+  baylyd
+  `.trim().split(/\n/).map(e => e.trim())
+  for (let user of users) {
     
-    let result =await fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent('https://editor.p5js.org/editor/baylyd/projects')}`)
-                    .then(response => {
-                      if (response.ok) return response.json()
-                      throw new Error('Network response was not ok.')
-                    })
-                    
+
+    let result = await fetch(`https://creative-code.tra220030.projects.jetstream-cloud.org:8080/https://editor.p5js.org/editor/${user}/projects`, {
+    "credentials": "include",
+    "headers": {
+		"X-Requested-With": "XMLHttpRequest",
+        "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:142.0) Gecko/20100101 Firefox/142.0",
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Alt-Used": "editor.p5js.org",
+        "Sec-Fetch-Dest": "empty",
+    }
+}).then(res=> res.json());
     console.log(result)
     let container = document.querySelector("#container")
-    for (let sketch of result.slice(0,20)) {
+    for (let sketch of result.slice(0, 3)) {
       let iframe = document.createElement("iframe")
       let id = sketch.id
-      iframe.src = `https://editor.p5js.org/poojakumar2899/full/${id}`
-      iframe.setAttribute("frameBorder","0")
-      iframe.setAttribute("width",iwidth)
-      iframe.setAttribute("height",iheight)
+      iframe.src = `https://editor.p5js.org/${user}/full/${id}`
+      iframe.setAttribute("frameBorder", "0")
+      iframe.setAttribute("width", iwidth)
+      iframe.setAttribute("height", iheight)
       container.append(iframe)
     }
-    
-    return result
+
+  }
+  return result
 
 }
 function test() {
-    console.log("loaded")
+  console.log("loaded")
 }
 
 window.onload = grabSketches
