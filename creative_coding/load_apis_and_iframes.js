@@ -28,9 +28,9 @@ async function grabSketches() {
       let sketchTime = new Date(sketch.updatedAt)
       let dif = now- sketchTime
       const differenceInHours = dif / (1000 * 60 * 60);
-      if (differenceInHours > 2) {
-        continue
-      } 
+      // if (differenceInHours > 2) {
+      //   continue
+      // } 
       let iframe = document.createElement("iframe")
       let id = sketch.id
       iframe.src = `https://editor.p5js.org/${user}/full/${id}`
