@@ -10,8 +10,7 @@ async function grabSketches() {
   for (let user of users) {
     
 
-    let result = await fetch(`https://creative-code.tra220030.projects.jetstream-cloud.org:8080/https://editor.p5js.org/editor/${user}/projects`, {
-    "credentials": "include",
+    let result = await fetch(`https://creative-code.tra220030.projects.jetstream-cloud.org/https://editor.p5js.org/editor/${user}/projects`, {
     "headers": {
 		"X-Requested-With": "XMLHttpRequest",
         "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:142.0) Gecko/20100101 Firefox/142.0",
@@ -24,6 +23,14 @@ async function grabSketches() {
     console.log(result)
     let container = document.querySelector("#container")
     for (let sketch of result.slice(0, 3)) {
+      // check that the sketch is recent enough
+      let now = new Date()
+      let sketchTime = new Date(sketch.updatedAt)
+      let dif = now- sketchTime
+      const differenceInHours = dif / (1000 * 60 * 60);
+      if (differenceInHours > 2) {
+        continue
+      } 
       let iframe = document.createElement("iframe")
       let id = sketch.id
       iframe.src = `https://editor.p5js.org/${user}/full/${id}`
@@ -31,6 +38,7 @@ async function grabSketches() {
       iframe.setAttribute("width", iwidth)
       iframe.setAttribute("height", iheight)
       container.append(iframe)
+      console.log(iframe.contentWindow.document.querySelector("canvas"))
     }
 
   }
