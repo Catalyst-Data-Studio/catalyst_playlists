@@ -13,7 +13,7 @@ async function grabSketches() {
   jbrandonr
   baylyd
   `.trim().split(/\n/).map(e => e.trim())
-  let total = 40
+  let total = 500
   for (let user of users) {
     
 
@@ -56,6 +56,7 @@ async function grabSketches() {
     <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.min.js"></script>
   </head>
   <body>
+  <p>${user}</p>
     <script>
           ${childFile.content}
     </script>
@@ -91,14 +92,23 @@ async function grabSketches() {
           
           iframe.srcdoc = htmlContent
           container.appendChild(iframe)
-          setTimeout(()=> {
-          let canvas = iframe.contentWindow.document.querySelector("canvas")
-          console.log(canvas)
-          let width = canvas.width
-          let height =canvas.height
-          iframe.setAttribute("width",width)
-          iframe.setAttribute("height",height)
-          },2000)
+          iframe.setAttribute("width",400)
+          iframe.setAttribute("height",300)
+          // let resizer = ()=> {
+          // let canvas = iframe.contentWindow.document.querySelector("canvas")
+          // console.log(canvas)
+          //   if (canvas ==null) {
+          //     setTimeout(resizer,2000)
+          //     return
+          //   }
+          // let width = canvas.width
+          // let height =canvas.height
+          // iframe.setAttribute("width",width)
+          // iframe.setAttribute("height",height)
+          // }
+          // resizer()
+          
+          
           
           // Select the node that will be observed for mutations
           
