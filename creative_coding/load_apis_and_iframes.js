@@ -27,11 +27,13 @@ async function grabSketches() {
       torso:1,
       legs:2
     }
-
     let just_bodies = result.filter(e=>e.name.search(/head|legs|torso/i) >-1)
     let sorting = function(a,b) {
-      console.log("a",`'${a.name}'`)
-      console.log("b",`'${b.name}'`)
+      let aPart = a.name.match(/(head|torso|legs)/i)[1]
+      let bPart = b.name.match(/(head|torso|legs)/i)[1] 
+      console.log("a",`'${a.name}'`,aPart)
+      console.log("b",`'${b.name}'`,bPart)
+
       return order[a.name]-order[b.name]
     }
     just_bodies.sort(sorting )
