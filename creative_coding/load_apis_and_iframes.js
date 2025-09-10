@@ -1,6 +1,7 @@
 // let url = <iframe src="https://editor.p5js.org/baylyd/full/h_ygl9vqE"></iframe>
 
 async function grabSketches() {
+
   //poojakumar2899
   let users = `
   karen.here
@@ -13,7 +14,7 @@ async function grabSketches() {
   jbrandonr
   baylyd
   `.trim().split(/\n/).map(e => e.trim())
-  let total = 500
+  let total = 40
   for (let user of users) {
     
 
@@ -46,6 +47,8 @@ async function grabSketches() {
         if (childFile.name == "sketch.js") {
           // use the iframe srcdoc method
           let iframe = document.createElement("iframe")
+          let idiv = document.createElement("div")
+          idiv.append(iframe)
           // get width and height 
           // setup listener for the size of the page
           let htmlContent = `
@@ -91,22 +94,32 @@ async function grabSketches() {
           `
           
           iframe.srcdoc = htmlContent
-          container.appendChild(iframe)
-          iframe.setAttribute("width",400)
-          iframe.setAttribute("height",300)
-          // let resizer = ()=> {
-          // let canvas = iframe.contentWindow.document.querySelector("canvas")
-          // console.log(canvas)
-          //   if (canvas ==null) {
-          //     setTimeout(resizer,2000)
-          //     return
-          //   }
-          // let width = canvas.width
-          // let height =canvas.height
-          // iframe.setAttribute("width",width)
-          // iframe.setAttribute("height",height)
-          // }
-          // resizer()
+          container.appendChild(idiv)
+          // iframe.setAttribute("width",400)
+          // iframe.setAttribute("height",300)
+          let resizer = ()=> {
+          let canvas = iframe.contentWindow.document.querySelector("canvas")
+          console.log(canvas)
+            if (canvas ==null) {
+              setTimeout(resizer,2000)
+              return
+            }
+          let width = canvas.width
+          let height =canvas.height
+
+          // figure out how many row and column spans this element is based on width and height
+          iframe.setAttribute("width",width)
+          iframe.setAttribute("height",height)
+
+          let rowspan = Math.floor(height/200)+1
+          let colspan = Math.floor(width/200) + 1
+          idiv.classList.add(
+					"grid__item"
+				);
+          idiv.style["grid-row"] = `span ${rowspan}`
+          idiv.style["grid-column"] = `span ${colspan}`
+          }
+          resizer()
           
           
           
@@ -114,22 +127,11 @@ async function grabSketches() {
           
         }
       }
-      // if (differenceInHours > 2) {
-      //   continue
-      // } 
-      // let iframe = document.createElement("iframe")
-      // let id = sketch.id
-      // iframe.src = `https://editor.p5js.org/${user}/full/${id}`
-      // iframe.setAttribute("frameBorder", "0")
-      // iframe.setAttribute("width", iwidth)
-      // iframe.setAttribute("height", iheight)
-      // container.append(iframe)
-      // console.log(iframe.contentWindow.document.querySelector("canvas"))
+      
     }
   }
 }
 function test() {
   console.log("loaded")
 }
-
 window.onload = grabSketches
