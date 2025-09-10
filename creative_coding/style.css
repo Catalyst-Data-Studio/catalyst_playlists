@@ -1,13 +1,30 @@
-iframe {
-  flex-basis: 500px;
-}
 
-element {
-  display: flex;
-  flex-wrap: wrap;
-}
 
 #container {
-  display:flex;
-  flex-direction:column;
+			display: grid ;
+			grid-auto-flow: dense ;
+			grid-auto-rows: 20px ;
+			/* grid-gap: 14px ; */
+			grid-template-columns: repeat( auto-fit, minmax( 20px, 1fr ) ) ;
+		}
+
+div.grid__item {
+  align-content: center ;
+  /* background-color: #F0F0F0 ; */
+  border: 1px solid #333333 ;
+  /* border-radius: 4px 4px 4px 4px ; */
+  display: grid ;
+  justify-content: center ;
 }
+
+div.grid__item--new {
+  background-color: gold ;
+  font-weight: 600 ;
+}
+
+div.grid__item--row-span-2 { grid-row: span 2 ; }
+div.grid__item--row-span-3 { grid-row: span 3 ; }
+div.grid__item--row-span-4 { grid-row: span 4 ; }
+div.grid__item--column-span-2 { grid-column: span 2 ; }
+div.grid__item--column-span-3 { grid-column: span 3 ; }
+div.grid__item--column-span-4 { grid-column: span 4 ; }

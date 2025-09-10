@@ -1,11 +1,20 @@
 // let url = <iframe src="https://editor.p5js.org/baylyd/full/h_ygl9vqE"></iframe>
 
 async function grabSketches() {
+
   //poojakumar2899
   let users = `
+  karen.here
+  mjwatzmedia
+  esanch50
+  MorganErdman
+  samik18
+  ggibbs
+  Heidi.G
+  jbrandonr
   baylyd
   `.trim().split(/\n/).map(e => e.trim())
-  let total = 500
+  let total = 100
   for (let user of users) {
     
 
@@ -22,23 +31,7 @@ async function grabSketches() {
     }).then(res => res.json());
     console.log(result)
     let container = document.querySelector("#container")
-    let order = {
-      head:0,
-      torso:1,
-      legs:2
-    }
-    let just_bodies = result.filter(e=>e.name.search(/head|legs|torso/i) >-1)
-    let sorting = function(a,b) {
-      let aPart = a.name.match(/(head|torso|legs)/i)[1]
-      let bPart = b.name.match(/(head|torso|legs)/i)[1] 
-      console.log("a",`'${a.name}'`,aPart)
-      console.log("b",`'${b.name}'`,bPart)
-
-      return order[a.name]-order[b.name]
-    }
-    just_bodies.sort(sorting )
-  
-    for (let sketch of just_bodies) {
+    for (let sketch of result) {
       total -=1
       if (total < 0) {
         break
@@ -49,12 +42,13 @@ async function grabSketches() {
       let dif = now - sketchTime
       const differenceInHours = dif / (1000 * 60 * 60);
       // go through the files and pick the child whos name is sketch
-      
+
       for (let childFile of sketch.files) {
         if (childFile.name == "sketch.js") {
           // use the iframe srcdoc method
           let iframe = document.createElement("iframe")
-          iframe.setAttribute("frameBorder",0)
+          let idiv = document.createElement("div")
+          idiv.append(iframe)
           // get width and height 
           // setup listener for the size of the page
           let htmlContent = `
@@ -63,8 +57,30 @@ async function grabSketches() {
   <head>
     <title>Iframe Content</title>
     <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.min.js"></script>
+    <style>
+//     main canvas {
+//   display: block;
+//   margin-left: auto;
+//   margin-right: auto;
+// }
+  body {
+  margin: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+canvas {
+  display: block; /* Removes extra space below canvas */
+  max-width: 100%;
+  max-height: 100%;
+}
+  </style>
   </head>
-  <body style="margin:0px;">
+  <body>
+  
     <script>
           ${childFile.content}
     </script>
@@ -99,20 +115,37 @@ async function grabSketches() {
           `
           
           iframe.srcdoc = htmlContent
-          container.appendChild(iframe)
+          container.appendChild(idiv)
           // iframe.setAttribute("width",400)
           // iframe.setAttribute("height",300)
+          iframe.setAttribute("frameBorder",0)
+          let retries = 3
           let resizer = ()=> {
           let canvas = iframe.contentWindow.document.querySelector("canvas")
           console.log(canvas)
             if (canvas ==null) {
+              retries-=1
+              if (retries <0) {
+                idiv.remove()
+                return
+              }
               setTimeout(resizer,2000)
               return
             }
-          let width = canvas.width
-          let height =canvas.height
+          let width = canvas.width +200
+          let height =canvas.height+200
+
+          // figure out how many row and column spans this element is based on width and height
           iframe.setAttribute("width",width)
           iframe.setAttribute("height",height)
+
+          let rowspan = Math.floor(height/20)
+          let colspan = Math.floor(width/20)
+          idiv.classList.add(
+					"grid__item"
+				);
+          idiv.style["grid-row"] = `span ${rowspan}`
+          idiv.style["grid-column"] = `span ${colspan}`
           }
           resizer()
           
@@ -129,5 +162,4 @@ async function grabSketches() {
 function test() {
   console.log("loaded")
 }
-
 window.onload = grabSketches
