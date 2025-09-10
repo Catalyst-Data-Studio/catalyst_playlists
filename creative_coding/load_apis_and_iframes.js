@@ -14,7 +14,7 @@ async function grabSketches() {
   jbrandonr
   baylyd
   `.trim().split(/\n/).map(e => e.trim())
-  let total = 40
+  let total = 100
   for (let user of users) {
     
 
@@ -57,9 +57,30 @@ async function grabSketches() {
   <head>
     <title>Iframe Content</title>
     <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.min.js"></script>
+    <style>
+//     main canvas {
+//   display: block;
+//   margin-left: auto;
+//   margin-right: auto;
+// }
+  body {
+  margin: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+canvas {
+  display: block; /* Removes extra space below canvas */
+  max-width: 100%;
+  max-height: 100%;
+}
+  </style>
   </head>
   <body>
-  <p>${user}</p>
+  
     <script>
           ${childFile.content}
     </script>
@@ -97,22 +118,29 @@ async function grabSketches() {
           container.appendChild(idiv)
           // iframe.setAttribute("width",400)
           // iframe.setAttribute("height",300)
+          iframe.setAttribute("frameBorder",0)
+          let retries = 3
           let resizer = ()=> {
           let canvas = iframe.contentWindow.document.querySelector("canvas")
           console.log(canvas)
             if (canvas ==null) {
+              retries-=1
+              if (retries <0) {
+                idiv.remove()
+                return
+              }
               setTimeout(resizer,2000)
               return
             }
-          let width = canvas.width
-          let height =canvas.height
+          let width = canvas.width +200
+          let height =canvas.height+200
 
           // figure out how many row and column spans this element is based on width and height
           iframe.setAttribute("width",width)
           iframe.setAttribute("height",height)
 
-          let rowspan = Math.floor(height/200)+1
-          let colspan = Math.floor(width/200) + 1
+          let rowspan = Math.floor(height/20)
+          let colspan = Math.floor(width/20)
           idiv.classList.add(
 					"grid__item"
 				);

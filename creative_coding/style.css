@@ -1,21 +1,18 @@
-iframe {
-  flex-basis: 500px;
-}
 
 
 #container {
 			display: grid ;
 			grid-auto-flow: dense ;
-			grid-auto-rows: 200px ;
-			grid-gap: 14px ;
-			grid-template-columns: repeat( auto-fit, minmax( 200px, 1fr ) ) ;
+			grid-auto-rows: 20px ;
+			/* grid-gap: 14px ; */
+			grid-template-columns: repeat( auto-fit, minmax( 20px, 1fr ) ) ;
 		}
 
 div.grid__item {
   align-content: center ;
-  background-color: #F0F0F0 ;
+  /* background-color: #F0F0F0 ; */
   border: 1px solid #333333 ;
-  border-radius: 4px 4px 4px 4px ;
+  /* border-radius: 4px 4px 4px 4px ; */
   display: grid ;
   justify-content: center ;
 }
