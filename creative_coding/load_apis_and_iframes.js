@@ -3,14 +3,6 @@
 async function grabSketches() {
   //poojakumar2899
   let users = `
-  karen.here
-  mjwatzmedia
-  esanch50
-  MorganErdman
-  samik18
-  ggibbs
-  Heidi.G
-  jbrandonr
   baylyd
   `.trim().split(/\n/).map(e => e.trim())
   let total = 500
@@ -30,7 +22,23 @@ async function grabSketches() {
     }).then(res => res.json());
     console.log(result)
     let container = document.querySelector("#container")
-    for (let sketch of result) {
+    let order = {
+      head:0,
+      torso:1,
+      legs:2
+    }
+    let just_bodies = result.filter(e=>e.name.search(/head|legs|torso/i) >-1)
+    let sorting = function(a,b) {
+      let aPart = a.name.match(/(head|torso|legs)/i)[1]
+      let bPart = b.name.match(/(head|torso|legs)/i)[1] 
+      console.log("a",`'${a.name}'`,aPart)
+      console.log("b",`'${b.name}'`,bPart)
+
+      return order[a.name]-order[b.name]
+    }
+    just_bodies.sort(sorting )
+  
+    for (let sketch of just_bodies) {
       total -=1
       if (total < 0) {
         break
@@ -41,11 +49,12 @@ async function grabSketches() {
       let dif = now - sketchTime
       const differenceInHours = dif / (1000 * 60 * 60);
       // go through the files and pick the child whos name is sketch
-
+      
       for (let childFile of sketch.files) {
         if (childFile.name == "sketch.js") {
           // use the iframe srcdoc method
           let iframe = document.createElement("iframe")
+          iframe.setAttribute("frameBorder",0)
           // get width and height 
           // setup listener for the size of the page
           let htmlContent = `
@@ -55,8 +64,7 @@ async function grabSketches() {
     <title>Iframe Content</title>
     <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.min.js"></script>
   </head>
-  <body>
-  <p>${user}</p>
+  <body style="margin:0px;">
     <script>
           ${childFile.content}
     </script>
@@ -92,21 +100,21 @@ async function grabSketches() {
           
           iframe.srcdoc = htmlContent
           container.appendChild(iframe)
-          iframe.setAttribute("width",400)
-          iframe.setAttribute("height",300)
-          // let resizer = ()=> {
-          // let canvas = iframe.contentWindow.document.querySelector("canvas")
-          // console.log(canvas)
-          //   if (canvas ==null) {
-          //     setTimeout(resizer,2000)
-          //     return
-          //   }
-          // let width = canvas.width
-          // let height =canvas.height
-          // iframe.setAttribute("width",width)
-          // iframe.setAttribute("height",height)
-          // }
-          // resizer()
+          // iframe.setAttribute("width",400)
+          // iframe.setAttribute("height",300)
+          let resizer = ()=> {
+          let canvas = iframe.contentWindow.document.querySelector("canvas")
+          console.log(canvas)
+            if (canvas ==null) {
+              setTimeout(resizer,2000)
+              return
+            }
+          let width = canvas.width
+          let height =canvas.height
+          iframe.setAttribute("width",width)
+          iframe.setAttribute("height",height)
+          }
+          resizer()
           
           
           
@@ -114,17 +122,7 @@ async function grabSketches() {
           
         }
       }
-      // if (differenceInHours > 2) {
-      //   continue
-      // } 
-      // let iframe = document.createElement("iframe")
-      // let id = sketch.id
-      // iframe.src = `https://editor.p5js.org/${user}/full/${id}`
-      // iframe.setAttribute("frameBorder", "0")
-      // iframe.setAttribute("width", iwidth)
-      // iframe.setAttribute("height", iheight)
-      // container.append(iframe)
-      // console.log(iframe.contentWindow.document.querySelector("canvas"))
+      
     }
   }
 }
