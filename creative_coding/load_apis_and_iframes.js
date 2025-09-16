@@ -1,13 +1,19 @@
 // let url = <iframe src="https://editor.p5js.org/baylyd/full/h_ygl9vqE"></iframe>
-
+function randomizer(lst) {
+  let randomInd = Math.floor(Math.random() * lst.length)
+  return lst[randomInd]
+}
 async function grabSketches() {
-  //poojakumar2899
+  //
   let users = `
   baylyd
+  poojakumar2899
   `.trim().split(/\n/).map(e => e.trim())
   let total = 500
+  let allSketches = []
+  let parts = { head: [], torso: [], legs: [] }
   for (let user of users) {
-    
+
     // token change
 
     let result = await fetch(`https://creative-code.tra220030.projects.jetstream-cloud.org/https://editor.p5js.org/editor/${user}/projects`, {
@@ -23,41 +29,39 @@ async function grabSketches() {
     console.log(result)
     let container = document.querySelector("#container")
     let order = {
-      head:0,
-      torso:1,
-      legs:2
+      head: 0,
+      torso: 1,
+      legs: 2
     }
-    let just_bodies = result.filter(e=>e.name.search(/head|legs|torso/i) >-1)
-    let sorting = function(a,b) {
-      let aPart = a.name.match(/(head|torso|legs)/i)[1]
-      let bPart = b.name.match(/(head|torso|legs)/i)[1] 
-      console.log("a",`'${a.name}'`,aPart)
-      console.log("b",`'${b.name}'`,bPart)
+    let just_bodies = result.filter(e => e.name.search(/head|legs|torso/i) > -1)
+    just_bodies.map(e => {
+      let part = e.name.match(/(head|torso|legs)/i)[1].toLowerCase()
+      console.log(part)
+      parts[part].push(e)
+    })
+  }
 
-      return order[a.name]-order[b.name]
-    }
-    just_bodies.sort(sorting )
-  
-    for (let sketch of just_bodies) {
-      total -=1
-      if (total < 0) {
-        break
-      }
-      // check that the sketch is recent enough
-      let now = new Date()
-      let sketchTime = new Date(sketch.updatedAt)
-      let dif = now - sketchTime
-      const differenceInHours = dif / (1000 * 60 * 60);
-      // go through the files and pick the child whos name is sketch
-      
-      for (let childFile of sketch.files) {
-        if (childFile.name == "sketch.js") {
-          // use the iframe srcdoc method
-          let iframe = document.createElement("iframe")
-          iframe.setAttribute("frameBorder",0)
-          // get width and height 
-          // setup listener for the size of the page
-          let htmlContent = `
+  let randHead = randomizer(parts.head)
+  let randTorso = randomizer(parts.torso)
+  let randLegs = randomizer(parts.legs)
+  let sketches = [randHead, randTorso, randLegs]
+  for (let sketch of sketches) {
+    // check that the sketch is recent enough
+    let now = new Date()
+    let sketchTime = new Date(sketch.updatedAt)
+    let dif = now - sketchTime
+    const differenceInHours = dif / (1000 * 60 * 60);
+    // go through the files and pick the child whos name is sketch
+
+    for (let childFile of sketch.files) {
+      if (childFile.name == "sketch.js") {
+        // use the iframe srcdoc method
+        let iframe = document.createElement("iframe")
+        iframe.setAttribute("frameBorder", 0)
+        iframe.setAttribute("scrolling","no")
+        // get width and height 
+        // setup listener for the size of the page
+        let htmlContent = `
           <!DOCTYPE html>
   <html>
   <head>
@@ -97,34 +101,34 @@ async function grabSketches() {
   </html>
 
           `
-          
-          iframe.srcdoc = htmlContent
-          container.appendChild(iframe)
-          // iframe.setAttribute("width",400)
-          // iframe.setAttribute("height",300)
-          let resizer = ()=> {
+
+        iframe.srcdoc = htmlContent
+        container.appendChild(iframe)
+        // iframe.setAttribute("width",400)
+        // iframe.setAttribute("height",300)
+        let resizer = () => {
           let canvas = iframe.contentWindow.document.querySelector("canvas")
           console.log(canvas)
-            if (canvas ==null) {
-              setTimeout(resizer,2000)
-              return
-            }
-          let width = canvas.width
-          let height =canvas.height
-          iframe.setAttribute("width",width)
-          iframe.setAttribute("height",height)
+          if (canvas == null) {
+            setTimeout(resizer, 2000)
+            return
           }
-          resizer()
-          
-          
-          
-          // Select the node that will be observed for mutations
-          
+          let width = canvas.width
+          let height = canvas.height
+          iframe.setAttribute("width", width)
+          iframe.setAttribute("height", height)
         }
+        resizer()
+
+
+
+        // Select the node that will be observed for mutations
+
       }
-      
     }
   }
+
+
 }
 function test() {
   console.log("loaded")
