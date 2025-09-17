@@ -110,7 +110,7 @@ async function grabSketches() {
           let canvas = iframe.contentWindow.document.querySelector("canvas")
           console.log(canvas)
           if (canvas == null) {
-            setTimeout(resizer, 2000)
+            setTimeout(resizer, 1000)
             return
           }
           let width = canvas.width
@@ -128,7 +128,9 @@ async function grabSketches() {
     }
   }
 
-
+ setInterval(()=> {
+  window.location.reload()
+ },5000)
 }
 function test() {
   console.log("loaded")
