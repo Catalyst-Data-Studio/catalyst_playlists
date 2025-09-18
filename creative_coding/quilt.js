@@ -4,6 +4,7 @@ async function grabSketches() {
 
   //poojakumar2899
   let users = `
+  baylyd
   karen.here
   mjwatzmedia
   esanch50
@@ -12,7 +13,6 @@ async function grabSketches() {
   ggibbs
   Heidi.G
   jbrandonr
-  baylyd
   `.trim().split(/\n/).map(e => e.trim())
   let total = 100
   for (let user of users) {
