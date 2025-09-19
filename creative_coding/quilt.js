@@ -32,6 +32,7 @@ async function grabSketches() {
     console.log(result)
     let container = document.querySelector("#container")
     for (let sketch of result) {
+      
       total -=1
       if (total < 0) {
         break
@@ -44,6 +45,9 @@ async function grabSketches() {
       let sketchTime = new Date(sketch.updatedAt)
       let dif = now - sketchTime
       const differenceInHours = dif / (1000 * 60 * 60);
+      if (differenceInHours>2) {
+        continue
+      }
       // go through the files and pick the child whos name is sketch
 
       for (let childFile of sketch.files) {
