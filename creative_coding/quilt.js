@@ -5,8 +5,8 @@ async function grabSketches() {
   //poojakumar2899
   let users = `
   baylyd
-  karen.here
   mjwatzmedia
+  karen.here
   esanch50
   MorganErdman
   samik18
@@ -35,6 +35,9 @@ async function grabSketches() {
       total -=1
       if (total < 0) {
         break
+      }
+      if (sketch.name.search(/(head|torso|legs)/i) > 0 ) {
+        continue
       }
       // check that the sketch is recent enough
       let now = new Date()
