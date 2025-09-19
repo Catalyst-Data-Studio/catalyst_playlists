@@ -6,8 +6,7 @@ function randomizer(lst) {
 async function grabSketches() {
   //
   let users = `
-  baylyd
-  poojakumar2899
+
   `.trim().split(/\n/).map(e => e.trim())
   let total = 500
   let allSketches = []
@@ -33,11 +32,18 @@ async function grabSketches() {
       torso: 1,
       legs: 2
     }
+     let now = new Date()
+    
     let just_bodies = result.filter(e => e.name.search(/head|legs|torso/i) > -1)
     just_bodies.map(e => {
       let part = e.name.match(/(head|torso|legs)/i)[1].toLowerCase()
+      let sketchTime = new Date(sketch.updatedAt)
+    let dif = now - sketchTime
+    const differenceInHours = dif / (1000 * 60 * 60);
       console.log(part)
-      parts[part].push(e)
+      if (differenceInHours<2) {
+                parts[part].push(e)
+      }
     })
   }
 
@@ -47,12 +53,9 @@ async function grabSketches() {
   let sketches = [randHead, randTorso, randLegs]
   for (let sketch of sketches) {
     // check that the sketch is recent enough
-    let now = new Date()
-    let sketchTime = new Date(sketch.updatedAt)
-    let dif = now - sketchTime
-    const differenceInHours = dif / (1000 * 60 * 60);
+   
     // go through the files and pick the child whos name is sketch
-
+    
     for (let childFile of sketch.files) {
       if (childFile.name == "sketch.js") {
         // use the iframe srcdoc method
