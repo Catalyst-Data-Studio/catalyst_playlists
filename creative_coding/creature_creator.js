@@ -7,8 +7,8 @@ async function grabSketches() {
   //
   let users = `
   ethan-jahn
-
-  `.trim().split(/\n/).map(e => e.trim())
+  poojakumar2899
+`.trim().split(/\n/).map(e => e.trim())
   let total = 500
   let allSketches = []
   let parts = { head: [], torso: [], legs: [] }
@@ -38,13 +38,13 @@ async function grabSketches() {
     let just_bodies = result.filter(e => e.name.search(/head|legs|torso/i) > -1)
     just_bodies.map(e => {
       let part = e.name.match(/(head|torso|legs)/i)[1].toLowerCase()
-      let sketchTime = new Date(sketch.updatedAt)
-    let dif = now - sketchTime
-    const differenceInHours = dif / (1000 * 60 * 60);
-      console.log(part)
-      if (differenceInHours<2) {
+    //   let sketchTime = new Date(sketch.updatedAt)
+    // let dif = now - sketchTime
+    // const differenceInHours = dif / (1000 * 60 * 60);
+      // console.log(part)
+      // if (differenceInHours<2) {
                 parts[part].push(e)
-      }
+      // }
     })
   }
 

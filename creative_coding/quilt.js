@@ -4,15 +4,15 @@ async function grabSketches() {
 
   //poojakumar2899
   let users = `
-  baylyd
-  mjwatzmedia
-  karen.here
-  esanch50
-  MorganErdman
-  samik18
-  ggibbs
-  Heidi.G
-  jbrandonr
+  poojakumar2899
+_JS_
+Heidi.G
+mayamartin
+chamitao
+robur_49
+reynomage
+arnold-pdev
+ethan-jahn 
   `.trim().split(/\n/).map(e => e.trim())
   let total = 100
   for (let user of users) {
@@ -28,7 +28,7 @@ async function grabSketches() {
         "Alt-Used": "editor.p5js.org",
         "Sec-Fetch-Dest": "empty",
       }
-    }).then(res => res.json());
+    }).then(res => res.json())
     console.log(result)
     let container = document.querySelector("#container")
     for (let sketch of result) {
@@ -132,10 +132,10 @@ canvas {
           console.log(canvas)
             if (canvas ==null) {
               retries-=1
-              if (retries <0) {
-                idiv.remove()
-                return
-              }
+              // if (retries <0) {
+              //   idiv.remove()
+              //   return
+              // }
               setTimeout(resizer,2000)
               return
             }
